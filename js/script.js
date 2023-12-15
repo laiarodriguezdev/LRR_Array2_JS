@@ -52,3 +52,39 @@ fetch("js/data/movies.json")
 });
 
 */
+
+
+/*------------------PART 1.------------------*/
+let arrayPokemon = [
+	["Laia", "imgur.com/a/tyuio", 47],
+	["David", "imatge", 77],
+
+];
+
+function LRRpart1(){
+	
+}
+
+function orderList(ordre, array){
+	
+}
+
+function searchList(element){
+
+}
+
+function calcMitjana(){
+	//toFixed
+}
+
+function printList(){
+
+}
+
+
+
+/*------------------PART 2.------------------*/
+
+/*------------------PART 3.------------------*/
+
+/*------------------PART 4.------------------*/
