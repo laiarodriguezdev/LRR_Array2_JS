@@ -62,18 +62,13 @@ let pokemonArrayNoms = [];
 
 
 async function dadesPokemon(){
-	try {
-		const response = await fetch("js/data/pokemon.json");
-		if (!response.ok) {
-		  throw new Error(`Error de la sol·licitud: ${response.status}`);
-		}
-		const data = await response.json();
-		const pokemons = data.pokemon || [];
-		return pokemons.map(({ id, name, img, weight }) => ({ id, name, img, weight }));
-	} catch (error) {
-		console.error('Hi ha hagut un error en obtenir les dades dels pokemons:', error);
-		return [];
+	const response = await fetch("js/data/pokemon.json");
+	if (!response.ok) {
+		throw new Error(`Error de la sol·licitud: ${response.status}`);
 	}
+	const data = await response.json();
+	const pokemons = data.pokemon || [];
+	return pokemons.map(({ id, name, img, weight, type }) => ({ id, name, img, weight, type }));
 }
 
 //AQUEST NOMES AGAFA NOMS PER EL ORDERLIST + SEARCH
@@ -155,16 +150,16 @@ async function crearArrayMultidimensional() {
 	  console.error('Error en obtenir les dades de Pokemon:', error);
 	}
     }
+
+crearArrayMultidimensional();
     
-    function calcMitjana(pesos) {
+function calcMitjana(pesos) {
 	const sumaPesos = pesos.reduce((acc, pes) => acc + pes, 0);
 	const mitjana = (sumaPesos / pesos.length).toFixed(2);
     
 	alert('La mitjana dels pesos és: ' + mitjana);
 }
     
-crearArrayMultidimensional();
-
 
 function printList(array) { 
 		const resultatDiv = document.getElementById('resultat');
@@ -211,6 +206,45 @@ document.addEventListener('DOMContentLoaded', (event) => {
     
 /*------------------PART 2.------------------*/
 
+let arrayLabels = [];
+let arrayDadesGraf = [];
+let backgroundColor = [];
+let borderColor = [];
+
+async function obtenirLabelsUnics() {
+	try {
+		const pokemonArray = await dadesPokemon();
+		
+		if (pokemonArray.length > 0) {
+		  const labelsUnicsSet = new Set();
+		  
+		  pokemonArray.forEach((pokemon) => {
+		    // Afegeix les etiquetes desitjades al conjunt
+		    labelsUnicsSet.add(pokemon.etiqueta); // Reemplaça "etiqueta" amb la propietat que vols utilitzar com a etiqueta
+		  });
+	  
+		  // Converteix el conjunt a un array
+		  const labelsUnicsArray = Array.from(labelsUnicsSet);
+	  
+		  console.log('Array de labels únics:', labelsUnicsArray);
+		  return labelsUnicsArray;
+		} else {
+		  console.error('Les dades de Pokemon són buides o no s\'han carregat correctament.');
+		  return [];
+		}
+	    } catch (error) {
+		console.error('Error en obtenir les dades de Pokemon:', error);
+		return [];
+	    }
+}
+    
+// Crida la funció per obtenir l'array de labels únics
+async function carregarDadesGrafiques() {
+	const labelsUnics = await obtenirLabelsUnics();
+	console.log(labelsUnics);
+}
+
+carregarDadesGrafiques();
 
 /*------------------PART 3.------------------*/
 

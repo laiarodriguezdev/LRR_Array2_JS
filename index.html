@@ -3,6 +3,7 @@
 <head>
 	<script src="js/script.js"></script>
 	<meta charset="UTF-8">
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Laia Rodríguez Ramos</title>
@@ -14,7 +15,14 @@
 	<button onclick="searchList(pokemonArrayNoms)">Cerca</button>
 	<button onclick="crearArrayMultidimensional(calcMitjana(pesos))">Mitjana</button>
 
-	<div id="resultat"></div>
+	<div class="chart-container" style="position: relative; width:700px">
+		<canvas id="myChart"></canvas>
+	</div>
+
+	<center>
+		<div id="resultat"></div>
+	</center>
+
 
 </body>
 </html>
