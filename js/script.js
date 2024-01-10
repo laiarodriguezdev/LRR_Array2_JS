@@ -13,11 +13,10 @@ async function dadesMunicipi(){
 		const municipis = data;
 	
 		municipis.forEach((municipi) => {
-		  console.log(municipis[0].municipi_nom); // Nom del municipi
-		  municipiArray.push({ municipi_nom: municipi.municipi_nom });
+			console.log(municipis[0].municipi_nom); 
+			municipiArray.push({ municipi_nom: municipi.municipi_nom });
 		});
 	
-		// Imprimir l'array amb les dades dels municipis
 		console.log(municipiArray);
 	})
 }
@@ -53,13 +52,27 @@ async function dadesMovies(){
 		moviesArray.push({ title: movie.title});
 	    });
   
-	  // Imprimir l'array amb les dades dels meteorites
 	  console.log(moviesArray);
 	})
 }
 
 // POKEMONS
 let pokemonArray = [];
+let pokemonArrayNoms = [];
+
+/*
+	fetch("js/data/pokemon.json")
+	.then((response) => response.json())
+	.then((data) => {
+	const pokemons = data.pokemon;
+	pokemons.forEach((pokemon) => {
+		console.log(pokemon.name);
+		pokemonArray.push({ name: pokemon.name});
+	    });
+
+	  console.log(pokemonArray);
+	})
+	*/
 
 async function dadesPokemon(){
 
@@ -72,17 +85,34 @@ async function dadesPokemon(){
 	  
 	return pokemonData;
 }
+
+//AQUEST NOMES AGAFA NOMS PER EL ORDERLIST + SEARCH
+async function dadesPokemon2(){
+	fetch("js/data/pokemon.json")
+	.then((response) => response.json())
+	.then((data) => {
+	const pokemons = data.pokemon;
+	pokemons.forEach((pokemon) => {
+		console.log(pokemon.name);
+		pokemonArrayNoms.push({ name: pokemon.name});
+	    });
+
+	  console.log(pokemonArrayNoms);
+	})
+}
+
 //#endregion
 
 /*------------------PART 1.------------------*/
 
-	dadesPokemon();
+dadesPokemon();
+dadesPokemon2();
 
 function LRRreload(){
 	location.reload();
 }
 
-function arrayOrdenat(array, ord){
+function orderList(array, ord){
 	array.sort((a, b) => ord ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name));
 
 	array.forEach((element) => {
@@ -95,14 +125,14 @@ function arrayOrdenat(array, ord){
 
 function searchList(array){
 	const elementABuscar = prompt('Introdueix l\'element a buscar:');
-  
-	// Cerca l'element a l'array
-	const index = array.findIndex((element) => element.name === elementABuscar);
 
+	// Cerca l'element a l'array pel nom del Pokémon
+	const index = array.findIndex((element) => element.name === elementABuscar);
+    
 	if (index !== -1) {
-	alert('L\'element ' + elementABuscar + ' es troba a la posició ' + index);
+	  alert('L\'element ' + elementABuscar + ' es troba a la posició ' + index);
 	} else {
-	alert('L\'element ' + elementABuscar + ' no es troba a l\'array');
+	  alert('L\'element ' + elementABuscar + ' no es troba a l\'array');
 	}
 }
 
@@ -114,6 +144,8 @@ function searchList(array){
 		- En el cas que sigui possible, afegeix una imatge.
 
 */
+
+let pesos = [];
 
 async function crearArrayMultidimensional() {
 		const pokemonArrayMulti = await dadesPokemon();
@@ -130,6 +162,8 @@ async function crearArrayMultidimensional() {
 		    arrayMultidimensional.push([pokemon.name, pokemon.img, pesNumeric]);
 		  });
 	  
+		  pesos = arrayMultidimensional.map((pokemon) => pokemon[2]);
+
 		  console.log("ARRAY MULTI DE POKEMON: ", arrayMultidimensional);
 
 		} else {
@@ -137,12 +171,16 @@ async function crearArrayMultidimensional() {
 		}
 }
 
+
+function calcMitjana(pesos){
+	const sumaPesos = pesos.reduce((acc, pes) => acc + pes, 0);
+	const mitjana = (sumaPesos / pesos.length).toFixed(2);
+	
+	alert('La mitjana dels pesos és: ' + mitjana);
+}
+
 crearArrayMultidimensional();
 
-function calcMitjana(valor){
-	const mitjana = valor.toFixed(2);
-  	alert('La mitjana del valor numèric és: ' + mitjana);
-}
 
 function printList(){
 
