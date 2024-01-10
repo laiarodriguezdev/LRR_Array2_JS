@@ -182,10 +182,48 @@ function calcMitjana(pesos){
 crearArrayMultidimensional();
 
 
-function printList(){
-
+function printList(array) { //L'ARRAY QUE UTILITZO ÉS EL QUE OBTÉ TOTES LES DADES, MÉS QUE NOM, IMATGE I PES. 
+		const resultatDiv = document.getElementById('resultat');
+		const table = document.createElement('table');
+	    
+		const headerRow = table.insertRow(0);
+		const headers = ['ID', 'Nom', 'Imatge', 'Pes'];
+		headers.forEach((headerText, index) => {
+		  const th = document.createElement('th');
+		  th.appendChild(document.createTextNode(headerText));
+		  headerRow.appendChild(th);
+		});
+	    
+		array.forEach((pokemon) => {
+		  const row = table.insertRow(-1);
+	    
+		  const cellId = row.insertCell(0);
+		  cellId.appendChild(document.createTextNode(pokemon.id));
+	    
+		  const cellNom = row.insertCell(1);
+		  cellNom.appendChild(document.createTextNode(pokemon.name));
+	    
+		  const cellImg = row.insertCell(2);
+		  const img = document.createElement('img');
+		  img.src = pokemon.img;
+		  img.alt = pokemon.name;
+		  cellImg.appendChild(img);
+	    
+		  const cellPes = row.insertCell(3);
+		  cellPes.appendChild(document.createTextNode(pokemon.weight));
+		});
+	    
+		resultatDiv.innerHTML = '';
+		resultatDiv.appendChild(table);
+	
 }
 
+document.addEventListener('DOMContentLoaded', (event) => {
+	dadesPokemon().then((pokemonArray) => {
+	  printList(pokemonArray);
+	});
+});
+    
 
 
 /*------------------PART 2.------------------*/
