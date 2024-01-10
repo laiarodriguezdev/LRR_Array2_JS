@@ -58,8 +58,6 @@ async function dadesMovies(){
 
 // POKEMONS
 let pokemonArray = [];
-let pokemonArrayNoms = [];
-
 
 async function dadesPokemon(){
 	const response = await fetch("js/data/pokemon.json");
@@ -71,44 +69,41 @@ async function dadesPokemon(){
 	return pokemons.map(({ id, name, img, weight, type }) => ({ id, name, img, weight, type }));
 }
 
-//AQUEST NOMES AGAFA NOMS PER EL ORDERLIST + SEARCH
-async function dadesPokemon2(){
-	fetch("js/data/pokemon.json")
-	.then((response) => response.json())
-	.then((data) => {
-	const pokemons = data.pokemon;
-	pokemons.forEach((pokemon) => {
-		console.log(pokemon.name);
-		pokemonArrayNoms.push({ name: pokemon.name});
-	    });
-
-	  console.log(pokemonArrayNoms);
-	})
-}
-
 //#endregion
 
 /*------------------PART 1.------------------*/
 
 dadesPokemon();
-dadesPokemon2();
 
 function LRRreload(){
 	location.reload();
 }
 
 function orderList(array, ord){
-	array.sort((a, b) => ord ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name));
+	console.log("ORDER LIST: ", array);
+	
+	/* ----------- SENSE TREBALLAR AMB L'ARRAY MULTI------------*/
+	
+	console.log('Abans de l\'ordenació:', array);
 
+	array.sort((a, b) => ord ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name));
+  
+	console.log('Després de l\'ordenació:', array);
+  
 	array.forEach((element) => {
 	  console.log(element.name);
 	});
-    
+  
 	const ordre = ord ? 'ascendent' : 'descendent';
 	alert('Array ordenat de manera ' + ordre);
 }
 
 function searchList(array){
+
+	console.log("SEARCH LIST: ", array);
+
+	/* ----------- SENSE TREBALLAR AMB L'ARRAY MULTI------------*/
+	/*
 	const elementABuscar = prompt('Introdueix l\'element a buscar:');
 
 	// Cerca l'element a l'array pel nom del Pokémon
@@ -119,6 +114,7 @@ function searchList(array){
 	} else {
 	  alert('L\'element ' + elementABuscar + ' no es troba a l\'array');
 	}
+	*/
 }
 
 /*
@@ -130,12 +126,14 @@ function searchList(array){
 
 */
 
+let arrayMultidimensional = [];
+
 async function crearArrayMultidimensional() {
 	try {
 	  const pokemonArrayMulti = await dadesPokemon();
     
 	  if (pokemonArrayMulti.length > 0) {
-	    const arrayMultidimensional = pokemonArrayMulti.map(({ name, img, weight }) => {
+	    arrayMultidimensional = pokemonArrayMulti.map(({ name, img, weight }) => {
 		const pesNumeric = parseFloat(weight);
 		return [name, img, pesNumeric];
 	    });
@@ -149,7 +147,7 @@ async function crearArrayMultidimensional() {
 	} catch (error) {
 	  console.error('Error en obtenir les dades de Pokemon:', error);
 	}
-    }
+}
 
 crearArrayMultidimensional();
     
@@ -197,7 +195,6 @@ function printList(array) {
 	
 }
 
-//PRIMER CARREGA TOT I LLAVORS SI QUE ES MOSTRA LA TAULA. 
 document.addEventListener('DOMContentLoaded', (event) => {
 	dadesPokemon().then((pokemonArray) => {
 	  printList(pokemonArray);
@@ -211,40 +208,6 @@ let arrayDadesGraf = [];
 let backgroundColor = [];
 let borderColor = [];
 
-async function obtenirLabelsUnics() {
-	try {
-		const pokemonArray = await dadesPokemon();
-		
-		if (pokemonArray.length > 0) {
-		  const labelsUnicsSet = new Set();
-		  
-		  pokemonArray.forEach((pokemon) => {
-		    // Afegeix les etiquetes desitjades al conjunt
-		    labelsUnicsSet.add(pokemon.etiqueta); // Reemplaça "etiqueta" amb la propietat que vols utilitzar com a etiqueta
-		  });
-	  
-		  // Converteix el conjunt a un array
-		  const labelsUnicsArray = Array.from(labelsUnicsSet);
-	  
-		  console.log('Array de labels únics:', labelsUnicsArray);
-		  return labelsUnicsArray;
-		} else {
-		  console.error('Les dades de Pokemon són buides o no s\'han carregat correctament.');
-		  return [];
-		}
-	    } catch (error) {
-		console.error('Error en obtenir les dades de Pokemon:', error);
-		return [];
-	    }
-}
-    
-// Crida la funció per obtenir l'array de labels únics
-async function carregarDadesGrafiques() {
-	const labelsUnics = await obtenirLabelsUnics();
-	console.log(labelsUnics);
-}
-
-carregarDadesGrafiques();
 
 /*------------------PART 3.------------------*/
 
