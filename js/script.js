@@ -60,30 +60,20 @@ async function dadesMovies(){
 let pokemonArray = [];
 let pokemonArrayNoms = [];
 
-/*
-	fetch("js/data/pokemon.json")
-	.then((response) => response.json())
-	.then((data) => {
-	const pokemons = data.pokemon;
-	pokemons.forEach((pokemon) => {
-		console.log(pokemon.name);
-		pokemonArray.push({ name: pokemon.name});
-	    });
-
-	  console.log(pokemonArray);
-	})
-	*/
 
 async function dadesPokemon(){
-
-	const response = await fetch("js/data/pokemon.json");
-
-	const data = await response.json();
-	const pokemonData = data.pokemon || [];
-	  
-	console.log('Dades de Pokemon obtingudes amb èxit:', pokemonData);
-	  
-	return pokemonData;
+	try {
+		const response = await fetch("js/data/pokemon.json");
+		if (!response.ok) {
+		  throw new Error(`Error de la sol·licitud: ${response.status}`);
+		}
+		const data = await response.json();
+		const pokemons = data.pokemon || [];
+		return pokemons.map(({ id, name, img, weight }) => ({ id, name, img, weight }));
+	} catch (error) {
+		console.error('Hi ha hagut un error en obtenir les dades dels pokemons:', error);
+		return [];
+	}
 }
 
 //AQUEST NOMES AGAFA NOMS PER EL ORDERLIST + SEARCH
@@ -145,44 +135,38 @@ function searchList(array){
 
 */
 
-let pesos = [];
-
 async function crearArrayMultidimensional() {
-		const pokemonArrayMulti = await dadesPokemon();
-	  
-		// Assegura't que la promesa s'ha resolt amb èxit i que pokemonArrayMulti no és undefined
-		if (pokemonArrayMulti && pokemonArrayMulti.length > 0) {
-		  const arrayMultidimensional = [];
-	  
-		  pokemonArrayMulti.forEach((pokemon) => {
-		    // Extreu el pes numeric (ignorant la unitat "kg")
-		    const pesNumeric = parseFloat(pokemon.weight);
-	  
-		    // Afegeix un nou element a l'array multidimensional
-		    arrayMultidimensional.push([pokemon.name, pokemon.img, pesNumeric]);
-		  });
-	  
-		  pesos = arrayMultidimensional.map((pokemon) => pokemon[2]);
-
-		  console.log("ARRAY MULTI DE POKEMON: ", arrayMultidimensional);
-
-		} else {
-		  console.error('Les dades de Pokemon són buides o no s\'han carregat correctament.');
-		}
-}
-
-
-function calcMitjana(pesos){
+	try {
+	  const pokemonArrayMulti = await dadesPokemon();
+    
+	  if (pokemonArrayMulti.length > 0) {
+	    const arrayMultidimensional = pokemonArrayMulti.map(({ name, img, weight }) => {
+		const pesNumeric = parseFloat(weight);
+		return [name, img, pesNumeric];
+	    });
+    
+	    pesos = arrayMultidimensional.map((pokemon) => pokemon[2]);
+    
+	    console.log("ARRAY MULTI DE POKEMON: ", arrayMultidimensional);
+	  } else {
+	    console.error('Les dades de Pokemon són buides o no s\'han carregat correctament.');
+	  }
+	} catch (error) {
+	  console.error('Error en obtenir les dades de Pokemon:', error);
+	}
+    }
+    
+    function calcMitjana(pesos) {
 	const sumaPesos = pesos.reduce((acc, pes) => acc + pes, 0);
 	const mitjana = (sumaPesos / pesos.length).toFixed(2);
-	
+    
 	alert('La mitjana dels pesos és: ' + mitjana);
 }
-
+    
 crearArrayMultidimensional();
 
 
-function printList(array) { //L'ARRAY QUE UTILITZO ÉS EL QUE OBTÉ TOTES LES DADES, MÉS QUE NOM, IMATGE I PES. 
+function printList(array) { 
 		const resultatDiv = document.getElementById('resultat');
 		const table = document.createElement('table');
 	    
@@ -218,16 +202,18 @@ function printList(array) { //L'ARRAY QUE UTILITZO ÉS EL QUE OBTÉ TOTES LES DA
 	
 }
 
+//PRIMER CARREGA TOT I LLAVORS SI QUE ES MOSTRA LA TAULA. 
 document.addEventListener('DOMContentLoaded', (event) => {
 	dadesPokemon().then((pokemonArray) => {
 	  printList(pokemonArray);
 	});
 });
     
-
-
 /*------------------PART 2.------------------*/
+
 
 /*------------------PART 3.------------------*/
 
+
 /*------------------PART 4.------------------*/
+
