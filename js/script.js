@@ -2,80 +2,106 @@
 
 /*------------------PART 0.------------------*/
 
-//#region 
-/*
+//#region FUNCIONS PER ELS DOCUMENTS
 // MUNICIPIS
-fetch("js/data/municipis.json")
-.then((response) => response.json())
-.then((data) => {
-	dades = data.elements;		
-	
-	console.log(dades)
-	console.log(dades[0].municipi_nom)
-});
+let municipiArray =[];
 
-/*
+async function dadesMunicipi(){
+	fetch("js/data/municipis.json")
+	.then((response) => response.json())
+	.then((data) => {
+		const municipis = data;
+	
+		municipis.forEach((municipi) => {
+		  console.log(municipis[0].municipi_nom); // Nom del municipi
+		  municipiArray.push({ municipi_nom: municipi.municipi_nom });
+		});
+	
+		// Imprimir l'array amb les dades dels municipis
+		console.log(municipiArray);
+	})
+}
 
 // METEORITS
-fetch("js/data/earthMeteorites.json")
-.then((response) => response.json())
-.then((data) => {
-	dades = data;		
-	
-	console.log(dades)
-	console.log(dades[0].name)
-});
+let meteoritesArray = [];
 
+async function dadesMeteor(){
+	fetch("js/data/earthMeteorites.json")
+	.then((response) => response.json())
+	.then((data) => {
+	  const meteorites = data.meteorites;
+  
+	  meteorites.forEach((meteorite) => {
+	    console.log(meteorite.name); 
+	    meteoritesArray.push({ name: meteorite.name });
+	  });
+  
+	  console.log(meteoritesArray);
+	})
+}
 
-// MOVIES
-fetch("js/data/movies.json")
-.then((response) => response.json())
-.then((data) => {
-	dades = data.movies;		
-	
-	console.log(dades)
-	console.log(dades[0].title)
-});
+// MOVIES 
+let moviesArray = [];
 
-*/
-//#endregion
-
+async function dadesMovies(){
+	fetch("js/data/movies.json")
+	.then((response) => response.json())
+	.then((data) => {
+	const movies = data.movies;
+	movies.forEach((movie) => {
+		console.log(movie.title);
+		moviesArray.push({ title: movie.title});
+	    });
+  
+	  // Imprimir l'array amb les dades dels meteorites
+	  console.log(moviesArray);
+	})
+}
 
 // POKEMONS
 let pokemonArray = [];
 
 async function dadesPokemon(){
-	try {
-		const response = await fetch("js/data/pokemon.json");
-	  
-		if (!response.ok) {
-		  throw new Error(`Error de la sol·licitud: ${response.status}`);
-		}
-	  
-		const data = await response.json();
-		const pokemons = data.pokemon;
-	  
-		// Imprimir els noms dels pokemons amb forEach i emmagatzemar-los a l'array
-		pokemons.forEach((pokemon) => {
-		  console.log(pokemon.name);
-		  pokemonArray.push({ name: pokemon.name });
-		  // Altres propietats que vulguis emmagatzemar
-		});
-	  
-		// Imprimir l'array amb les dades dels pokemons
-		console.log(pokemonArray);
-	    } catch (error) {
-		console.error('Hi ha hagut un error en obtenir les dades dels pokemons:', error);
-	}
+	fetch("js/data/pokemon.json")
+	.then((response) => response.json())
+	.then((data) => {
+	  const pokemons = data.pokemon;
+  
+	  pokemons.forEach((pokemon) => {
+	    console.log(pokemon.name);
+	    pokemonArray.push({ name: pokemon.name });
+	  });
+  
+	  // Imprimir l'array amb les dades de les pel·lícules
+	  console.log(pokemonArray);
+	})
 }
+//#endregion
 
 /*------------------PART 1.------------------*/
-function LRRpart1(){
+
 	dadesPokemon();
+
+function LRRreload(){
+	location.reload();
 }
 
-function orderList(ordre, array){
-	
+function arrayAscendent(array){
+	array.sort((a, b) => a.name.localeCompare(b.name));
+
+	array.forEach((element) => {
+		console.log(element.name);
+	});
+	alert('Array ordenat de manera ascendent');
+}
+
+function arrayDescendent(array){
+	array.sort((a, b) => b.name.localeCompare(a.name));
+
+	array.forEach((element) => {
+		console.log(element.name);
+	});
+      alert('Array ordenat de manera descendent');
 }
 
 function searchList(element){
