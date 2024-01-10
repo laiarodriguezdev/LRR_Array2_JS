@@ -1,22 +1,8 @@
-			
-// POKEMONS
+// VARIABLES GLOBALS
 
-let dades;
+/*------------------PART 0.------------------*/
 
-
-// POKEMONS
-fetch("js/data/pokemon.json")
-.then((response) => response.json())
-.then((data) => {
-	dades = data.pokemon;		
-	
-	console.log(dades)
-	console.log(dades[0].name)
-
-});
-
-
-
+//#region 
 /*
 // MUNICIPIS
 fetch("js/data/municipis.json")
@@ -52,17 +38,40 @@ fetch("js/data/movies.json")
 });
 
 */
+//#endregion
 
+
+// POKEMONS
+let pokemonArray = [];
+
+async function dadesPokemon(){
+	try {
+		const response = await fetch("js/data/pokemon.json");
+	  
+		if (!response.ok) {
+		  throw new Error(`Error de la sol·licitud: ${response.status}`);
+		}
+	  
+		const data = await response.json();
+		const pokemons = data.pokemon;
+	  
+		// Imprimir els noms dels pokemons amb forEach i emmagatzemar-los a l'array
+		pokemons.forEach((pokemon) => {
+		  console.log(pokemon.name);
+		  pokemonArray.push({ name: pokemon.name });
+		  // Altres propietats que vulguis emmagatzemar
+		});
+	  
+		// Imprimir l'array amb les dades dels pokemons
+		console.log(pokemonArray);
+	    } catch (error) {
+		console.error('Hi ha hagut un error en obtenir les dades dels pokemons:', error);
+	}
+}
 
 /*------------------PART 1.------------------*/
-let arrayPokemon = [
-	["Laia", "imgur.com/a/tyuio", 47],
-	["David", "imatge", 77],
-
-];
-
 function LRRpart1(){
-	
+	dadesPokemon();
 }
 
 function orderList(ordre, array){
