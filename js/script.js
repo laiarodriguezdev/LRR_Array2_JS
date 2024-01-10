@@ -86,30 +86,59 @@ function LRRreload(){
 	location.reload();
 }
 
-function arrayAscendent(array){
-	array.sort((a, b) => a.name.localeCompare(b.name));
+function arrayOrdenat(array, ord){
+	array.sort((a, b) => ord ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name));
 
 	array.forEach((element) => {
-		console.log(element.name);
+	  console.log(element.name);
 	});
-	alert('Array ordenat de manera ascendent');
+    
+	const ordre = ord ? 'ascendent' : 'descendent';
+	alert('Array ordenat de manera ' + ordre);
 }
 
-function arrayDescendent(array){
-	array.sort((a, b) => b.name.localeCompare(a.name));
+function searchList(array){
+	const elementABuscar = prompt('Introdueix l\'element a buscar:');
+  
+	// Cerca l'element a l'array
+	const index = array.findIndex((element) => element.name === elementABuscar);
 
-	array.forEach((element) => {
-		console.log(element.name);
+	if (index !== -1) {
+	alert('L\'element ' + elementABuscar + ' es troba a la posició ' + index);
+	} else {
+	alert('L\'element ' + elementABuscar + ' no es troba a l\'array');
+	}
+}
+
+/*
+	Realitza una array multidimensional que emmagatzemi més d’un valor. Exemple:
+		a. [[“nom Pokemon”, img, weight], [“nom Pokemon”, img, weight]...]
+		*Tingues en compte que si per exemple la dada és “23 kg” t’has de quedar només amb el
+		valor numèric
+		- En el cas que sigui possible, afegeix una imatge.
+
+*/
+
+async function crearArrayMultidimensional() {
+	const pokemonArray = await dadesPokemon();
+	const arrayMultidimensional = [];
+    
+	pokemonArray.forEach((pokemon) => {
+	  // Extreu el pes numeric (ignorant la unitat "kg")
+	  const pesNumeric = parseFloat(pokemon.weight);
+    
+	  // Afegeix un nou element a l'array multidimensional
+	  arrayMultidimensional.push([pokemon.name, pokemon.img, pesNumeric]);
 	});
-      alert('Array ordenat de manera descendent');
+
+	console.log(arrayMultidimensional);
 }
 
-function searchList(element){
+crearArrayMultidimensional();
 
-}
-
-function calcMitjana(){
-	//toFixed
+function calcMitjana(valor){
+	const mitjana = valor.toFixed(2);
+  	alert('La mitjana del valor numèric és: ' + mitjana);
 }
 
 function printList(){
