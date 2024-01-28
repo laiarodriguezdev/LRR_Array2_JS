@@ -170,34 +170,6 @@ function searchList(array){
 
 */
 
-<<<<<<< HEAD
-let arrayMultidimensional = [];
-
-async function crearArrayMultidimensional() {
-	try {
-	  const pokemonArrayMulti = await dadesPokemon();
-    
-	  if (pokemonArrayMulti.length > 0) {
-	    arrayMultidimensional = pokemonArrayMulti.map(({ name, img, weight }) => {
-		const pesNumeric = parseFloat(weight);
-		return [name, img, pesNumeric];
-	    });
-    
-	    pesos = arrayMultidimensional.map((pokemon) => pokemon[2]);
-    
-	    console.log("ARRAY MULTI DE POKEMON: ", arrayMultidimensional);
-	  } else {
-	    console.error('Les dades de Pokemon són buides o no s\'han carregat correctament.');
-	  }
-	} catch (error) {
-	  console.error('Error en obtenir les dades de Pokemon:', error);
-	}
-}
-
-crearArrayMultidimensional();
-    
-function calcMitjana(pesos) {
-=======
 let pesos = [];
 
 async function crearArrayMultidimensional() {
@@ -226,19 +198,14 @@ async function crearArrayMultidimensional() {
 
 
 function calcMitjana(pesos){
->>>>>>> parent of 96661e6 (Ara de moment, només necessita optimització.)
 	const sumaPesos = pesos.reduce((acc, pes) => acc + pes, 0);
 	const mitjana = (sumaPesos / pesos.length).toFixed(2);
 	
 	alert('La mitjana dels pesos és: ' + mitjana);
 }
-<<<<<<< HEAD
-    
-=======
 
 crearArrayMultidimensional();
 
->>>>>>> parent of 96661e6 (Ara de moment, només necessita optimització.)
 
 function printList(array) { //L'ARRAY QUE UTILITZO ÉS EL QUE OBTÉ TOTES LES DADES, MÉS QUE NOM, IMATGE I PES. 
 		const resultatDiv = document.getElementById('resultat');
