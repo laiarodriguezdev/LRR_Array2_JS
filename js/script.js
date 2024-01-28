@@ -58,17 +58,6 @@ async function dadesMovies(){
 
 // POKEMONS
 let pokemonArray = [];
-<<<<<<< HEAD
-
-async function dadesPokemon(){
-	const response = await fetch("js/data/pokemon.json");
-	if (!response.ok) {
-		throw new Error(`Error de la sol·licitud: ${response.status}`);
-	}
-	const data = await response.json();
-	const pokemons = data.pokemon || [];
-	return pokemons.map(({ id, name, img, weight, type }) => ({ id, name, img, weight, type }));
-=======
 let pokemonArrayNoms = [];
 
 /*
@@ -110,7 +99,6 @@ async function dadesPokemon2(){
 
 	  console.log(pokemonArrayNoms);
 	})
->>>>>>> parent of 96661e6 (Ara de moment, només necessita optimització.)
 }
 
 //#endregion
@@ -147,7 +135,6 @@ function searchList(array){
 	console.log("SEARCH LIST: ", array);
 
 	/* ----------- SENSE TREBALLAR AMB L'ARRAY MULTI------------*/
-	/*
 	const elementABuscar = prompt('Introdueix l\'element a buscar:');
 
 	// Cerca l'element a l'array pel nom del Pokémon
@@ -158,7 +145,7 @@ function searchList(array){
 	} else {
 	  alert('L\'element ' + elementABuscar + ' no es troba a l\'array');
 	}
-	*/
+	
 }
 
 /*
@@ -175,12 +162,11 @@ let pesos = [];
 async function crearArrayMultidimensional() {
 		const pokemonArrayMulti = await dadesPokemon();
 	  
-		// Assegura't que la promesa s'ha resolt amb èxit i que pokemonArrayMulti no és undefined
 		if (pokemonArrayMulti && pokemonArrayMulti.length > 0) {
 		  const arrayMultidimensional = [];
 	  
 		  pokemonArrayMulti.forEach((pokemon) => {
-		    // Extreu el pes numeric (ignorant la unitat "kg")
+		    // IGNORA EL KG
 		    const pesNumeric = parseFloat(pokemon.weight);
 	  
 		    // Afegeix un nou element a l'array multidimensional
